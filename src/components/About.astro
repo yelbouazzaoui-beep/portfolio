@@ -1,0 +1,89 @@
+---
+/**
+ * About Component (À Propos)
+ * Grille de cartes numérotées avec barre d'accent vertical
+ * Animations échelonnées (stagger children)
+ */
+---
+
+<section id="about" class="py-20 relative">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="scroll-reveal mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">À Propos</h2>
+      <p class="text-xl text-[var(--color-text-muted)] max-w-2xl">
+        Découvrez mon histoire et ma passion pour le développement logiciel
+      </p>
+    </div>
+
+    <!-- About Cards Grid -->
+    <div class="scroll-reveal-stagger grid md:grid-cols-2 gap-8">
+      <!-- Card 01 -->
+      <div class="group relative p-8 rounded-lg glass card-hover border-l-4 border-[var(--color-primary)] overflow-hidden">
+        <div class="absolute -top-1 left-0 right-0 h-px bg-gradient-to-r from-[var(--color-primary)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-4xl font-bold mono text-[var(--color-primary)] opacity-30">01</span>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-3">Fondateur & Créateur</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed">
+              Je suis un étudiant en informatique chez ESISA avec une passion innée pour la résolution de problèmes 
+              et la création de solutions digitales innovantes. Mon parcours m'a permis de développer une expertise 
+              solide en développement web full-stack.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 02 -->
+      <div class="group relative p-8 rounded-lg glass card-hover border-l-4 border-[var(--color-accent)] overflow-hidden">
+        <div class="absolute -top-1 left-0 right-0 h-px bg-gradient-to-r from-[var(--color-accent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-4xl font-bold mono text-[var(--color-accent)] opacity-30">02</span>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-3">Philosophie de Développement</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed">
+              Je crois au code propre, documenté et maintenable. Chaque ligne que j'écris est pensée pour être 
+              lisible et efficace. Je privilégie l'expérience utilisateur et je m'efforce de créer des interfaces 
+              intuitives et performantes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 03 -->
+      <div class="group relative p-8 rounded-lg glass card-hover border-l-4 border-[var(--color-primary-light)] overflow-hidden">
+        <div class="absolute -top-1 left-0 right-0 h-px bg-gradient-to-r from-[var(--color-primary-light)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-4xl font-bold mono text-[var(--color-primary-light)] opacity-30">03</span>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-3">Apprentissage Continu</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed">
+              Dans un domaine qui évolue rapidement, je m'engage à rester à jour avec les dernières technologies 
+              et meilleures pratiques. Je suis un apprenant enthousiaste qui adore explorer de nouveaux frameworks 
+              et outils.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 04 -->
+      <div class="group relative p-8 rounded-lg glass card-hover border-l-4 border-[var(--color-accent-light)] overflow-hidden">
+        <div class="absolute -top-1 left-0 right-0 h-px bg-gradient-to-r from-[var(--color-accent-light)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-4xl font-bold mono text-[var(--color-accent-light)] opacity-30">04</span>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-3">Collaboration & Communication</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed">
+              Je travaille bien en équipe et j'aime partager mes connaissances avec les autres développeurs. 
+              La communication claire et l'écoute active sont au cœur de ma philosophie de travail.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,89 @@
+---
+/**
+ * Education Component
+ * Timeline verticale avec points gradients et animations
+ * - Badge "Latest" sur la première entrée
+ * - Badges périodes, diplôme, domaine, liens
+ */
+
+import { education } from '../data/portfolio';
+import { createIconSvg } from '../utils/icons';
+---
+
+<section id="education" class="py-20 relative">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="scroll-reveal mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Éducation</h2>
+      <p class="text-xl text-[var(--color-text-muted)] max-w-2xl">
+        Mon parcours académique et formations
+      </p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="scroll-reveal-stagger relative">
+      <!-- Vertical line (hidden on mobile) -->
+      <div class="hidden md:absolute md:left-1/2 md:transform md:-translate-x-1/2 md:w-1 md:h-full md:bg-gradient-to-b md:from-[var(--color-primary)] md:to-transparent"></div>
+
+      <!-- Timeline Items -->
+      <div class="space-y-8">
+        {education.map((edu, idx) => (
+          <div class={`scroll-reveal relative flex gap-8 ${idx % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
+            <!-- Timeline Point (hidden on mobile) -->
+            <div class="hidden md:flex md:flex-col md:items-center md:justifiy-center md:w-1/2">
+              <div class="relative">
+                <div
+                  class="w-4 h-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] rounded-full border-4 border-[var(--color-bg)] shadow-lg shadow-[var(--color-primary)]/50 animate-pulse"
+                  style="box-shadow: 0 0 20px var(--color-primary);"
+                ></div>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class={`md:w-1/2 ${idx % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+              <div class="p-6 rounded-lg glass card-hover group">
+                <!-- Latest Badge -->
+                {edu.isCurrent && (
+                  <div class="mb-3">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[var(--color-success)] text-white">
+                      Vérification en cours
+                    </span>
+                  </div>
+                )}
+
+                <!-- Period Badge -->
+                <div class="flex gap-2 mb-4 @apply {idx % 2 === 0 ? 'justify-end' : 'justify-start'}">
+                  <span class="mono text-xs px-3 py-1 rounded bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                    {edu.startDate} {edu.endDate ? `- ${edu.endDate}` : '- Maintenant'}
+                  </span>
+                </div>
+
+                <!-- Degree & Field -->
+                <h3 class="text-xl font-bold mb-2">{edu.degree}</h3>
+                <p class="text-lg text-[var(--color-primary)] font-semibold mb-2">{edu.field}</p>
+
+                <!-- School Link -->
+                <a
+                  href={edu.schoolUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 text-[var(--color-accent)] hover:text-[var(--color-accent-light)] transition-colors mb-3"
+                >
+                  <span>{edu.school}</span>
+                  <span set:html={createIconSvg('ExternalLink', 'w-4 h-4')}></span>
+                </a>
+
+                <!-- Description -->
+                {edu.description && (
+                  <p class="text-[var(--color-text-muted)] text-sm leading-relaxed">
+                    {edu.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
