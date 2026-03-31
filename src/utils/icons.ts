@@ -37,7 +37,6 @@ export const lucideIcons: Record<string, string> = {
   Users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   Briefcase: '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 3h-4a2 2 0 0 0-2 2v4h8V5a2 2 0 0 0-2-2z"/>',
   MapPin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
-  Zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
 
   // Dev Icons
   GitBranch: '<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
@@ -54,7 +53,7 @@ export const lucideIcons: Record<string, string> = {
   Star: '<polygon points="12 2 15.09 10.26 23.77 10.5 17.16 16.83 19.41 25.5 12 20.27 4.59 25.5 6.84 16.83 0.23 10.5 8.91 10.26 12 2"/>',
   Check: '<polyline points="20 6 9 17 4 12"/>',
   AlertCircle: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
-  Brain: '<path d="M9.59 4.59A2 2 0 1 1 7.5 8H2m10.59 11.41A2 2 0 1 0 14.5 16H22m-13-5.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0m0-5a2 2 0 1 0 4 0 2 2 0 0 0-4 0m11 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/>,
+  Brain: '<path d="M9.59 4.59A2 2 0 1 1 7.5 8H2m10.59 11.41A2 2 0 1 0 14.5 16H22m-13-5.5a2 2 0 1 1 4 0 2 2 0 0 1-4 0m0-5a2 2 0 1 0 4 0 2 2 0 0 0-4 0m11 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/>',
 
   // Generic
   Dot: '<circle cx="12" cy="12" r="1"/>',
