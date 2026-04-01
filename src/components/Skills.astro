@@ -62,7 +62,7 @@ const categories = Object.keys(skillsByCategory);
                 <!-- Icon Container -->
                 <div class="flex items-center justify-between mb-4">
                   <div class="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center group-hover:bg-[var(--color-primary)]/20 group-hover:scale-110 transition-all">
-                    <span set:html={createIconSvg(skill.icon, 'w-6 h-6 text-[var(--color-primary)]')}></span>
+                    <span set:html={createIconSvg(skill.icon, 'w-5 h-5 text-[var(--color-primary)]')}></span>
                   </div>
                   <span class="text-xs mono text-[var(--color-text-muted)]">
                     {skill.proficiency && skill.proficiency}
@@ -97,7 +97,7 @@ const categories = Object.keys(skillsByCategory);
             <div class="p-6 rounded-lg glass card-hover group flex items-start gap-4">
               <!-- Icon -->
               <div class="w-12 h-12 rounded-lg bg-[var(--color-accent)]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--color-accent)]/20 group-hover:scale-110 transition-all">
-                <span set:html={createIconSvg(skill.icon, 'w-6 h-6 text-[var(--color-accent)]')}></span>
+                <span set:html={createIconSvg(skill.icon, 'w-5 h-5 text-[var(--color-accent)]')}></span>
               </div>
 
               <!-- Content -->

@@ -14,7 +14,7 @@ import { generateNavItems, personalInfo, socialLinks } from '../data/portfolio';
 import { createIconSvg } from '../utils/icons';
 
 const navItems = generateNavItems();
-const logoIcon = createIconSvg('Code', 'w-6 h-6');
+const logoIcon = createIconSvg('Code', 'w-5 h-5');
 ---
 
 <header class="sticky top-0 z-40 w-full glass border-b border-[var(--color-border)]">
@@ -60,7 +60,7 @@ const logoIcon = createIconSvg('Code', 'w-6 h-6');
         aria-label="Toggle menu"
         aria-expanded="false"
       >
-        <span id="menu-icon" set:html={createIconSvg('Menu', 'w-6 h-6')}></span>
+        <span id="menu-icon" set:html={createIconSvg('Menu', 'w-5 h-5')}></span>
       </button>
     </div>
   </nav>
@@ -89,7 +89,7 @@ const logoIcon = createIconSvg('Code', 'w-6 h-6');
           aria-label="Close menu"
           class="p-2 rounded-lg hover:bg-[var(--color-bg-tertiary)]"
         >
-          <span set:html={createIconSvg('X', 'w-6 h-6')}></span>
+          <span set:html={createIconSvg('X', 'w-5 h-5')}></span>
         </button>
       </div>
 

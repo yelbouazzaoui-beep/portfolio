@@ -81,6 +81,7 @@ export function getIcon(name: string): string {
 
 export function createIconSvg(name: string, className: string = ''): string {
   const pathData = getIcon(name);
-  const classes = className ? ` class="${className}"` : '';
+  const classList = ['icon', className].filter(Boolean).join(' ');
+  const classes = classList ? ` class="${classList}"` : '';
   return `<svg${classes} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${pathData}</svg>`;
 }
