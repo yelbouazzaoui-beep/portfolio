@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -std=c99
-LDFLAGS = -lraylib -lm -lpthread -ldl -lrt -lX11
+LDFLAGS = -lraylib -lopengl32 -lgdi32 -lwinmm
 
-SRC = main.c game.c snake.c food.c utils.c
+SRC = game.c main.c snake.c food.c utils.c
 OBJ = $(SRC:.c=.o)
 
 all: snake_game

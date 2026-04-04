@@ -9,14 +9,40 @@ int main(void)
     GameState gameState;
     InitGame(&gameState);
 
+    const Color snakeBodyColors[] = {GREEN, ORANGE, SKYBLUE, RED};
+    const Color snakeHeadColors[] = {LIME, (Color){255, 165, 0, 255}, SKYBLUE, (Color){255, 0, 0, 255}};
+    const Color snakeEyeColors[] = {DARKGREEN, (Color){139, 69, 19, 255}, DARKBLUE, (Color){139, 0, 0, 255}};
+    const Color bgColors1[] = {DARKBLUE, BLACK, DARKGRAY};
+    const Color bgColors2[] = {(Color){20, 20, 50, 255}, BLACK, DARKGRAY};
+
     float moveTimer = 0.0f;
-    const float moveDelay = 0.15f;
+    const float moveDelay = 0.06f; // Even faster snake speed: move every 0.06 seconds
 
     while (!WindowShouldClose())
     {
         moveTimer += GetFrameTime();
 
-        if (!gameState.gameOver)
+        if (gameState.mode == MENU)
+        {
+            if (IsKeyPressed(KEY_SPACE))
+            {
+                gameState.mode = PLAYING;
+            }
+            if (IsKeyPressed(KEY_C))
+            {
+                gameState.snakeColorIndex = (gameState.snakeColorIndex + 1) % 4;
+                gameState.snake.bodyColor = snakeBodyColors[gameState.snakeColorIndex];
+                gameState.snake.headColor = snakeHeadColors[gameState.snakeColorIndex];
+                gameState.snake.eyeColor = snakeEyeColors[gameState.snakeColorIndex];
+            }
+            if (IsKeyPressed(KEY_B))
+            {
+                gameState.bgColorIndex = (gameState.bgColorIndex + 1) % 3;
+                gameState.bgColor1 = bgColors1[gameState.bgColorIndex];
+                gameState.bgColor2 = bgColors2[gameState.bgColorIndex];
+            }
+        }
+        else if (gameState.mode == PLAYING)
         {
             // Arrow keys
             if ((IsKeyPressed(KEY_UP) || IsKeyPressedRepeat(KEY_UP)) &&
@@ -68,22 +94,28 @@ int main(void)
                 moveTimer = 0.0f;
             }
         }
-        else if (IsKeyPressed(KEY_R))
+        else if (gameState.mode == GAME_OVER)
         {
-            CloseGame(&gameState);
-            InitGame(&gameState);
-            moveTimer = 0.0f;
+            if (IsKeyPressed(KEY_R))
+            {
+                CloseGame(&gameState);
+                InitGame(&gameState);
+                moveTimer = 0.0f;
+            }
         }
 
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(DARKBLUE);
         DrawGame(&gameState);
 
         // Debug: shows current direction
-        DrawText(TextFormat("Dir: %.0f, %.0f",
-                            gameState.snake.direction.x,
-                            gameState.snake.direction.y),
-                 10, 40, 20, BLUE);
+        if (gameState.mode == PLAYING)
+        {
+            DrawText(TextFormat("Dir: %.0f, %.0f",
+                                gameState.snake.direction.x,
+                                gameState.snake.direction.y),
+                     10, 40, 20, GREEN);
+        }
 
         EndDrawing();
     }

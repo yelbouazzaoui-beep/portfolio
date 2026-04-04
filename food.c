@@ -14,12 +14,13 @@ void RespawnFood(Food *food)
 
 void DrawFood(const Food *food)
 {
-    DrawRectangle(food->position.x, food->position.y, 20, 20, RED);
+    DrawRectangle(food->position.x + 2, food->position.y + 2, 20, 20, (Color){0, 0, 0, 100});
+    DrawRectangle(food->position.x, food->position.y, 20, 20, YELLOW);
 }
 bool CheckFoodCollision(Snake *snake, Food *food)
 {
-    if (snake->body[0].x == food->position.x &&
-        snake->body[0].y == food->position.y)
+    if (snake->targetBody[0].x == food->position.x &&
+        snake->targetBody[0].y == food->position.y)
     {
         return true;
     }

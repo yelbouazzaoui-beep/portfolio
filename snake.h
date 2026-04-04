@@ -6,8 +6,13 @@
 typedef struct Snake
 {
     Vector2 *body;
+    Vector2 *targetBody; // For smooth movement
     int length;
     Vector2 direction;
+    float lerpTimer;
+    Color bodyColor;
+    Color headColor;
+    Color eyeColor;
 } Snake;
 
 void InitSnake(Snake *snake);
