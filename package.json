@@ -1,0 +1,31 @@
+{
+  "name": "portfolio-youssef",
+  "version": "1.0.0",
+  "description": "Professional portfolio for Youssef EL BOUAZZAOUI - Computer Science Student",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": [
+    "astro",
+    "portfolio",
+    "vercel",
+    "web-development"
+  ],
+  "author": "Youssef EL BOUAZZAOUI",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^4.8.0",
+    "jspdf": "^2.5.1",
+    "docx": "^8.5.0",
+    "file-saver": "^2.0.5",
+    "@vercel/analytics": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}

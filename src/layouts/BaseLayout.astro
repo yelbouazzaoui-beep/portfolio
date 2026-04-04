@@ -1,0 +1,464 @@
+---
+/**
+ * Layout principal (BaseLayout)
+ * Gère le wrapper HTML, styles globaux, animations et script de scroll-reveal via IntersectionObserver
+ * Inclut le Header, Footer, Chatbot AI, Export CV modal et Back-to-top button
+ * Ne rend jamais le Header ou Footer directement dans les pages (uniquement ici)
+ */
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import AiAssistant from '../components/AiAssistant.astro';
+import ResumeExport from '../components/ResumeExport.astro';
+import BackToTop from '../components/BackToTop.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Portfolio - Youssef EL BOUAZZAOUI', description = 'Professional portfolio of Youssef EL BOUAZZAOUI, Computer Science Student and Aspiring Software Developer' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0f1e" />
+    <title>{title}</title>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Import Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme script (prevent FOUC) -->
+    <script is:inline>
+      const saved = localStorage.getItem('theme');
+      const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const theme = saved || preferred;
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.style.colorScheme = theme;
+    </script>
+
+    <!-- Vercel Analytics -->
+    <script is:inline>
+      if (typeof window !== 'undefined') {
+        import('@vercel/analytics').then(module => {
+          module.inject({ mode: 'auto' });
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Fond avec grille decorative -->
+    <div class="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+      <!-- Grille -->
+      <div
+        class="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg width=\"60\" height=\"60\" xmlns=\"http://www.w3.org/2000/svg\"><defs><pattern id=\"grid\" width=\"60\" height=\"60\" patternUnits=\"userSpaceOnUse\"><path d=\"M 60 0 L 0 0 0 60\" fill=\"none\" stroke=\"rgba(255,255,255,0.05)\" stroke-width=\"1\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"none\"/><rect width=\"100%\" height=\"100%\" fill=\"url(%23grid)\" /></svg>')]"
+      ></div>
+
+      <!-- Orbes floues -->
+      <div
+        class="absolute top-20 left-10 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-blob"
+      ></div>
+      <div
+        class="absolute top-40 right-10 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-blob animation-delay-2000"
+      ></div>
+    </div>
+
+    <!-- Skip link -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Header (sticky) -->
+    <Header />
+
+    <!-- Main content -->
+    <main id="main">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+
+    <!-- AI Chatbot -->
+    <AiAssistant />
+
+    <!-- Resume Export Modal -->
+    <ResumeExport />
+
+    <!-- Back to Top Button -->
+    <BackToTop />
+
+    <!-- Global Styles -->
+    <style is:global>
+      /* CSS Custom Properties - Dark Theme (par défaut) */
+      html[data-theme='dark'] {
+        --color-bg: #0a0f1e;
+        --color-bg-secondary: #0f1627;
+        --color-bg-tertiary: #151d2d;
+        --color-text: #e2e8f0;
+        --color-text-muted: #94a3b8;
+        --color-text-muted-light: #64748b;
+        --color-primary: #3b82f6;
+        --color-primary-light: #60a5fa;
+        --color-accent: #a78bfa;
+        --color-accent-light: #c4b5fd;
+        --color-success: #10b981;
+        --color-warning: #f59e0b;
+        --color-danger: #ef4444;
+        --color-border: rgba(226, 232, 240, 0.1);
+        --color-border-hover: rgba(226, 232, 240, 0.2);
+        --color-glow: rgba(59, 130, 246, 0.5);
+        --color-glass-bg: rgba(15, 22, 39, 0.7);
+        --color-glass-border: rgba(226, 232, 240, 0.1);
+        --font-sans: 'Inter', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        --gradient-accent: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+        --radius: 0.5rem;
+      }
+
+      /* Light Theme */
+      html[data-theme='light'] {
+        --color-bg: #f8fafc;
+        --color-bg-secondary: #f1f5f9;
+        --color-bg-tertiary: #e2e8f0;
+        --color-text: #0f172a;
+        --color-text-muted: #475569;
+        --color-text-muted-light: #64748b;
+        --color-primary: #2563eb;
+        --color-primary-light: #3b82f6;
+        --color-accent: #7c3aed;
+        --color-accent-light: #8b5cf6;
+        --color-success: #059669;
+        --color-warning: #d97706;
+        --color-danger: #dc2626;
+        --color-border: rgba(15, 23, 42, 0.15);
+        --color-border-hover: rgba(15, 23, 42, 0.3);
+        --color-glow: rgba(37, 99, 235, 0.3);
+        --color-glass-bg: rgba(248, 250, 252, 0.8);
+        --color-glass-border: rgba(15, 23, 42, 0.1);
+        --font-sans: 'Inter', sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
+        --shadow-2xl: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+        --gradient-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        --gradient-accent: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+        --radius: 0.5rem;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        color-scheme: var(--color-scheme, dark);
+      }
+
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Text Selection */
+      ::selection {
+        background-color: var(--color-primary);
+        color: var(--color-bg);
+      }
+
+      /* Focus visible */
+      :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      /* Links */
+      a {
+        color: var(--color-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--color-primary-light);
+      }
+
+      /* Skip link */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--color-primary);
+        color: var(--color-bg);
+        padding: 8px;
+        text-decoration: none;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        top: 0;
+      }
+
+      /* Heading styles */
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      h1 { font-size: 3.5rem; }
+      h2 { font-size: 2.25rem; }
+      h3 { font-size: 1.875rem; }
+      h4 { font-size: 1.5rem; }
+      h5 { font-size: 1.25rem; }
+      h6 { font-size: 1rem; }
+
+      /* Container */
+      .container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        h1 { font-size: 2.25rem; }
+        h2 { font-size: 1.875rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        .container {
+          padding: 0 1rem;
+        }
+      }
+
+      /* Glassmorphism */
+      .glass {
+        background: var(--color-glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--color-glass-border);
+      }
+
+      /* Scroll Animations Classes */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Stagger animation for children */
+      .scroll-reveal-stagger > * {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .scroll-reveal-stagger.visible > * {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+
+      .scroll-reveal-stagger.visible > :nth-child(1) { transition-delay: 0.1s; }
+      .scroll-reveal-stagger.visible > :nth-child(2) { transition-delay: 0.2s; }
+      .scroll-reveal-stagger.visible > :nth-child(3) { transition-delay: 0.3s; }
+      .scroll-reveal-stagger.visible > :nth-child(4) { transition-delay: 0.4s; }
+      .scroll-reveal-stagger.visible > :nth-child(5) { transition-delay: 0.5s; }
+      .scroll-reveal-stagger.visible > :nth-child(n+6) { transition-delay: 0.6s; }
+
+      /* Animations */
+      @keyframes blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+
+      @keyframes glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.7); }
+      }
+
+      @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      @keyframes slide-in-left {
+        from { transform: translateX(-100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+
+      @keyframes pulse-ring {
+        0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+      }
+
+      .animate-blob {
+        animation: blob 7s infinite;
+      }
+
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+
+      /* Utilities */
+      .gradient-text {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .gradient-accent {
+        background: var(--gradient-accent);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Icon Styling (consistent, modern, responsive) */
+      .icon {
+        display: inline-flex;
+        width: 1.25rem; /* 20px */
+        height: 1.25rem; /* 20px */
+        min-width: 1.25rem;
+        min-height: 1.25rem;
+        stroke-width: 2;
+        vertical-align: middle;
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      /* Small / medium / large helpers for icons */
+      .icon--sm {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .icon--md {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .icon--lg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .icon-spacing {
+        margin-right: 0.5rem;
+        margin-left: 0.15rem;
+      }
+
+      .icon:hover {
+        transform: scale(1.08);
+      }
+
+      .icon + * {
+        margin-left: 0.4rem;
+      }
+
+      .icon-spacing {
+        margin-right: 0.5rem;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+        border: 1px solid var(--color-border);
+      }
+
+      .card-hover:hover {
+        border-color: var(--color-border-hover);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Main content area */
+      main {
+        min-height: 100vh;
+      }
+    </style>
+
+    <!-- Scroll Reveal Script -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        // Observe all elements with scroll-reveal class
+        document.querySelectorAll('.scroll-reveal, .scroll-reveal-stagger').forEach(el => {
+          observer.observe(el);
+        });
+
+        // Update active nav link based on scroll position
+        const navLinks = document.querySelectorAll('[data-nav-link]');
+        const sections = document.querySelectorAll('[id]');
+
+        const navObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              navLinks.forEach(link => link.classList.remove('active'));
+              const activeLink = document.querySelector(`[data-nav-link="#${entry.target.id}"]`);
+              if (activeLink) activeLink.classList.add('active');
+            }
+          });
+        }, { threshold: 0.3 });
+
+        sections.forEach(section => navObserver.observe(section));
+      });
+    </script>
+  </body>
+</html>

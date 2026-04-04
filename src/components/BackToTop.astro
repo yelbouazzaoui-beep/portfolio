@@ -1,0 +1,39 @@
+---
+/**
+ * BackToTop Component
+ * Bouton flottant automatiquement caché/affiché au scroll
+ * Scrolls smooth vers le haut au clic
+ */
+
+import { createIconSvg } from '../utils/icons';
+---
+
+<button
+  id="back-to-top"
+  class="fixed bottom-6 right-6 z-40 p-3 rounded-lg glass border border-[var(--color-border)] text-[var(--color-primary)] opacity-0 -translate-y-4 pointer-events-none transition-all duration-300 hover:bg-[var(--color-primary)] hover:text-white hover:shadow-lg hover:-translate-y-6 group"
+  title="Retour au haut"
+  aria-label="Back to top"
+>
+  <span set:html={createIconSvg('ArrowDown', 'w-5 h-5 transform rotate-180 group-hover:scale-110 transition-transform')}></span>
+</button>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        backToTopBtn.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      } else {
+        backToTopBtn.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>

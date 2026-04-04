@@ -1,0 +1,172 @@
+---
+/**
+ * Hero Component - Section pleine hauteur avec présentation
+ * - Nom en dégradé animé
+ * - Titre + sous-titre adaptés au profil
+ * - Badge disponibilité avec point vert pulsant
+ * - Photo de profil avec anneau gradient et animation hue-rotate
+ * - Boutons d'action adaptés au profil
+ * - Pilules de liens sociaux
+ * - Statistiques en grille
+ * - Indicateur de scroll en bas
+ */
+
+import { personalInfo, stats, socialLinks } from '../data/portfolio';
+import { createIconSvg } from '../utils/icons';
+
+const displayStats = [
+  { label: 'Projets', value: stats.projectsCompleted },
+  { label: 'Technologies', value: stats.technologiesMastered },
+  { label: 'Certifications', value: stats.certificatesEarned },
+  { label: 'Années', value: stats.yearsStudying }
+];
+---
+
+<section id="home" class="min-h-screen relative flex items-center justify-center pt-20 pb-10 overflow-hidden">
+  <div class="container">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left Content -->
+      <div class="scroll-reveal space-y-8 order-2 md:order-1">
+        <!-- Subtitle -->
+        <div>
+          <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-widest mb-4">
+            Bienvenue dans mon portfolio
+          </p>
+        </div>
+
+        <!-- Main Title with gradient -->
+        <div>
+          <h1 class="text-5xl md:text-6xl font-bold mb-4">
+            <span class="gradient-text animate-gradient-shift" style="background-size: 200% 200%;">
+              {personalInfo.firstName} {personalInfo.lastName}
+            </span>
+          </h1>
+          <p class="text-2xl md:text-3xl text-[var(--color-primary-light)] font-semibold">
+            {personalInfo.title}
+          </p>
+          <p class="text-lg text-[var(--color-text-muted)] mt-2">
+            {personalInfo.subtitle}
+          </p>
+        </div>
+
+        <!-- Availability Badge -->
+        <div>
+          <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass">
+            <span class="inline-block w-3 h-3 bg-[var(--color-success)] rounded-full animate-pulse"></span>
+            <span class="text-sm font-medium">{personalInfo.availabilityLabel}</span>
+          </span>
+        </div>
+
+        <!-- Description -->
+        <p class="text-lg text-[var(--color-text-muted)] leading-relaxed max-w-md">
+          Étudiant en informatique passionné par le développement web. Je crée des applications modernes, 
+          performantes et centrées sur l'utilisateur en utilisant les dernières technologies.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4 pt-4">
+          <a
+            href="#projects"
+            class="px-6 py-3 rounded-lg bg-[var(--color-primary)] text-white font-semibold hover:bg-[var(--color-primary-light)] transition-all hover:shadow-lg hover:-translate-y-1"
+          >
+            Voir mes projets
+          </a>
+          <button
+            id="resume-export-btn"
+            class="px-6 py-3 rounded-lg border-2 border-[var(--color-primary)] text-[var(--color-primary)] font-semibold hover:bg-[var(--color-primary)] hover:text-white transition-all hover:shadow-lg hover:-translate-y-1"
+          >
+            Télécharger mon CV
+          </button>
+        </div>
+
+        <!-- Social Pills -->
+        <div class="flex gap-3 pt-4">
+          {socialLinks.map(link => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={link.label}
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass hover:bg-[var(--color-primary)] hover:text-white transition-all hover:shadow-lg group"
+            >
+              <span set:html={createIconSvg(link.icon, 'w-4 h-4 group-hover:scale-110 transition-transform')}></span>
+              <span class="text-sm font-medium hidden sm:inline">{link.name}</span>
+            </a>
+          ))}
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-[var(--color-border)]">
+          {displayStats.map(stat => (
+            <div class="text-center">
+              <p class="text-2xl md:text-3xl font-bold gradient-text mb-1">{stat.value}+</p>
+              <p class="text-xs md:text-sm text-[var(--color-text-muted)]">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right - Profile Image -->
+      <div class="scroll-reveal flex items-center justify-center order-1 md:order-2">
+        <div class="relative">
+          <!-- Gradient Ring Background Animation -->
+          <div
+            class="absolute inset-0 w-80 h-80 rounded-full"
+            style="
+              background: conic-gradient(from 0deg, #3b82f6, #8b5cf6, #e879f9, #3b82f6);
+              animation: hue-rotate 8s linear infinite;
+              opacity: 0.9;
+            "
+          ></div>
+
+          <!-- Padding for ring effect -->
+          <div class="relative w-80 h-80 p-2 rounded-full bg-[var(--color-bg)]">
+            <!-- Profile Image -->
+            <img
+              src={personalInfo.avatarUrl}
+              alt={personalInfo.firstName}
+              class="w-full h-full rounded-full object-cover border-4 border-[var(--color-bg-secondary)] hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Floating Badge (Scroll Indicator would go here if needed) -->
+          <div
+            class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 flex items-center justify-center mt-12"
+          >
+            <div class="animate-bounce text-[var(--color-text-muted)]">
+              <span set:html={createIconSvg('ChevronDown', 'w-5 h-5')}></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  @keyframes hue-rotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const resumeBtn = document.getElementById('resume-export-btn');
+    resumeBtn?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('openResumeExport'));
+    });
+  });
+</script>

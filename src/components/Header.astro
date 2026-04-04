@@ -1,0 +1,245 @@
+---
+/**
+ * Header Component - Navigation sticky avec glassmorphism
+ * - Logo avec n et nom de l'étudiant
+ * - Navigation desktop avec icônes Lucide
+ * - Bouton hamburger animé pour mobile
+ * - Toggle thème (soleil/lune)
+ * - Liens sociaux dans le drawer mobile
+ * - Surlignage automatique du lien actif
+ * Tout le JavaScript est autonome dans ce composant (script inline)
+ */
+
+import { generateNavItems, personalInfo, socialLinks } from '../data/portfolio';
+import { createIconSvg } from '../utils/icons';
+
+const navItems = generateNavItems();
+const logoIcon = createIconSvg('Code', 'w-5 h-5');
+---
+
+<header class="sticky top-0 z-40 w-full glass border-b border-[var(--color-border)]">
+  <nav class="container flex items-center justify-between h-16">
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-2 text-xl font-bold hover:text-[var(--color-primary)] transition-colors">
+      <span set:html={logoIcon} class="text-[var(--color-primary)]"></span>
+      <span>{personalInfo.firstName}</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="hidden md:flex items-center gap-8">
+      {navItems.map(item => (
+        <li>
+          <a
+            href={item.href}
+            data-nav-link={item.href}
+            class="flex items-center gap-2 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors group relative"
+          >
+            <span set:html={createIconSvg(item.icon, 'w-4 h-4')}></span>
+            <span class="text-sm font-medium">{item.label}</span>
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--color-primary)] group-hover:w-full transition-all duration-300"></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-4">
+      <!-- Theme Toggle -->
+      <button
+        id="theme-toggle"
+        class="p-2 rounded-lg hover:bg-[var(--color-bg-tertiary)] transition-colors"
+        aria-label="Toggle theme"
+      >
+        <span id="theme-icon" class="text-xl">{createIconSvg('Sun', 'w-5 h-5')}</span>
+      </button>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 rounded-lg hover:bg-[var(--color-bg-tertiary)] transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <span id="menu-icon" set:html={createIconSvg('Menu', 'w-5 h-5')}></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-50 hidden md:hidden"
+  >
+    <!-- Backdrop -->
+    <div
+      id="menu-backdrop"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm"
+    ></div>
+
+    <!-- Drawer -->
+    <div
+      id="menu-drawer"
+      class="fixed right-0 top-0 h-screen w-full max-w-sm bg-[var(--color-bg-secondary)] shadow-2xl transform translate-x-full transition-transform duration-300"
+    >
+      <!-- Drawer Header -->
+      <div class="flex items-center justify-between p-4 border-b border-[var(--color-border)]">
+        <span class="text-lg font-bold">{personalInfo.firstName}</span>
+        <button
+          id="close-menu"
+          aria-label="Close menu"
+          class="p-2 rounded-lg hover:bg-[var(--color-bg-tertiary)]"
+        >
+          <span set:html={createIconSvg('X', 'w-5 h-5')}></span>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-6">
+        <ul class="space-y-4">
+          {navItems.map(item => (
+            <li>
+              <a
+                href={item.href}
+                data-nav-link={item.href}
+                class="flex items-center gap-3 p-3 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg-tertiary)] transition-all"
+              >
+                <span set:html={createIconSvg(item.icon, 'w-5 h-5')}></span>
+                <span class="font-medium">{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Social Links -->
+      <div class="border-t border-[var(--color-border)] p-6">
+        <p class="text-sm text-[var(--color-text-muted)] mb-4 uppercase font-semibold">Suivez-moi</p>
+        <div class="flex gap-4">
+          {socialLinks.map(link => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={link.label}
+              class="p-3 rounded-lg bg-[var(--color-bg-tertiary)] hover:bg-[var(--color-primary)] hover:text-white transition-all"
+            >
+              <span set:html={createIconSvg(link.icon, 'w-5 h-5')}></span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Theme Toggle in Drawer -->
+      <div class="border-t border-[var(--color-border)] p-6">
+        <button
+          id="theme-toggle-drawer"
+          class="w-full flex items-center justify-between p-3 rounded-lg bg-[var(--color-bg-tertiary)] hover:bg-[var(--color-primary)] transition-all group"
+        >
+          <span class="font-medium">Mode sombre</span>
+          <span id="theme-icon-drawer" class="text-xl group-hover:text-white">{createIconSvg('Moon', 'w-5 h-5')}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  header {
+    --color-scheme: dark;
+  }
+
+  html[data-theme='light'] header {
+    --color-scheme: light;
+  }
+
+  /* Active nav link */
+  a[data-nav-link].active {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  a[data-nav-link].active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-primary);
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ============ THEME TOGGLE ============
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDrawer = document.getElementById('theme-toggle-drawer');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeIconDrawer = document.getElementById('theme-icon-drawer');
+    const html = document.documentElement;
+
+    function updateThemeIcon() {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const sunSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+      const moonSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      
+      if (themeIcon) themeIcon.innerHTML = isDark ? moonSvg : sunSvg;
+      if (themeIconDrawer) themeIconDrawer.innerHTML = isDark ? sunSvg : moonSvg;
+    }
+
+    function toggleTheme() {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const newTheme = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      document.documentElement.style.colorScheme = newTheme;
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) {
+        metaTheme.setAttribute('content', newTheme === 'dark' ? '#0a0f1e' : '#f8fafc');
+      }
+      updateThemeIcon();
+    }
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    themeToggleDrawer?.addEventListener('click', toggleTheme);
+    updateThemeIcon();
+
+    // ============ MOBILE MENU ============
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuDrawer = document.getElementById('menu-drawer');
+    const menuBackdrop = document.getElementById('menu-backdrop');
+    const closeMenu = document.getElementById('close-menu');
+    const menuLinks = document.querySelectorAll('#mobile-menu a[data-nav-link]');
+
+    function openMenu() {
+      mobileMenu?.classList.remove('hidden');
+      menuDrawer?.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenuDrawer() {
+      menuDrawer?.classList.add('translate-x-full');
+      setTimeout(() => {
+        mobileMenu?.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    menuToggle?.addEventListener('click', openMenu);
+    closeMenu?.addEventListener('click', closeMenuDrawer);
+    menuBackdrop?.addEventListener('click', closeMenuDrawer);
+
+    // Close menu on link click
+    menuLinks.forEach(link => {
+      link.addEventListener('click', closeMenuDrawer);
+    });
+
+    // Close menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+        closeMenuDrawer();
+      }
+    });
+  });
+</script>

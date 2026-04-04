@@ -1,0 +1,86 @@
+---
+/**
+ * Footer Component
+ * Grille trois colonnes : marque + description, navigation rapide, liens sociaux
+ * Barre inférieure avec copyright et crédits
+ */
+
+import { generateNavItems, personalInfo, socialLinks } from '../data/portfolio';
+import { createIconSvg } from '../utils/icons';
+
+const navItems = generateNavItems();
+---
+
+<footer class="py-16 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50">
+  <div class="container">
+    <!-- Footer Content Grid -->
+    <div class="grid md:grid-cols-3 gap-12 mb-12">
+      <!-- Brand & Description -->
+      <div class="scroll-reveal">
+        <a href="#home" class="flex items-center gap-2 text-xl font-bold mb-4 hover:text-[var(--color-primary)] transition-colors">
+          <span set:html={createIconSvg('Code', 'w-5 h-5')}></span>
+          <span>{personalInfo.firstName}</span>
+        </a>
+        <p class="text-[var(--color-text-muted)] leading-relaxed">
+          Développeur web passionné créant des applications modernes et performantes avec les dernières technologies.
+        </p>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="scroll-reveal">
+        <h3 class="text-lg font-bold mb-6 uppercase tracking-widest text-sm">Navigation</h3>
+        <ul class="space-y-3">
+          {navItems.slice(1, -1).map(item => (
+            <li>
+              <a
+                href={item.href}
+                class="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors inline-flex items-center gap-2"
+              >
+                <span set:html={createIconSvg(item.icon, 'w-4 h-4')}></span>
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="scroll-reveal">
+        <h3 class="text-lg font-bold mb-6 uppercase tracking-widest text-sm">Connexion</h3>
+        <div class="space-y-3">
+          {socialLinks.map(link => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={link.label}
+              class="flex items-center gap-3 p-3 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg-tertiary)] transition-all group"
+            >
+              <span set:html={createIconSvg(link.icon, 'w-5 h-5 group-hover:translate-x-1 transition-transform')}></span>
+              <span class="font-medium">{link.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="scroll-reveal pt-12 border-t border-[var(--color-border)] flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--color-text-muted)]">
+      <p>
+        © 2024 {personalInfo.firstName} {personalInfo.lastName}. Tous droits réservés.
+      </p>
+      <p class="flex items-center gap-2">
+        Construit avec
+        <span set:html={createIconSvg('Heart', 'w-4 h-4 text-[var(--color-danger)]')}></span>
+        avec
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
+          Astro
+        </a>
+        &
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" class="text-[var(--color-primary)] hover:text-[var(--color-primary-light)]">
+          Vercel
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,25 @@
+---
+/**
+ * Main Portfolio Page (index.astro)
+ * Assemble tous les composants basés sur les sections actives
+ * Utilise le BaseLayout pour le wrapper HTML et la gestion globale
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import { activeSections } from '../data/portfolio';
+---
+
+<BaseLayout>
+  <Hero />
+  {activeSections.about && <About />}
+  {activeSections.skills && <Skills />}
+  {activeSections.education && <Education />}
+  {activeSections.projects && <Projects />}
+  {activeSections.contact && <Contact />}
+</BaseLayout>
